@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalaryScheduler", "SalaryScheduler\SalaryScheduler.csproj", "{4C6A7B47-12AF-C460-81C8-E9C508D26697}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4C6A7B47-12AF-C460-81C8-E9C508D26697}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C6A7B47-12AF-C460-81C8-E9C508D26697}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C6A7B47-12AF-C460-81C8-E9C508D26697}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C6A7B47-12AF-C460-81C8-E9C508D26697}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B37E0D08-3E29-421E-A256-FA2866566B70}
+	EndGlobalSection
+EndGlobal
