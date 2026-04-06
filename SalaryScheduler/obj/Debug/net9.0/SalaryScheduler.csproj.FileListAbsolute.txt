@@ -73,6 +73,7 @@ D:\MyProject\EmployeeSalaryScheduler\SalaryScheduler\SalaryScheduler\obj\Debug\n
 D:\MyProject\EmployeeSalaryScheduler\SalaryScheduler\SalaryScheduler\obj\Debug\net9.0\SalaryScheduler.csproj.CoreCompileInputs.cache
 D:\MyProject\EmployeeSalaryScheduler\SalaryScheduler\SalaryScheduler\obj\Debug\net9.0\SalaryScheduler.MvcApplicationPartsAssemblyInfo.cs
 D:\MyProject\EmployeeSalaryScheduler\SalaryScheduler\SalaryScheduler\obj\Debug\net9.0\SalaryScheduler.MvcApplicationPartsAssemblyInfo.cache
+D:\MyProject\EmployeeSalaryScheduler\SalaryScheduler\SalaryScheduler\obj\Debug\net9.0\SalaryScheduler.sourcelink.json
 D:\MyProject\EmployeeSalaryScheduler\SalaryScheduler\SalaryScheduler\obj\Debug\net9.0\rjimswa.dswa.cache.json
 D:\MyProject\EmployeeSalaryScheduler\SalaryScheduler\SalaryScheduler\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
 D:\MyProject\EmployeeSalaryScheduler\SalaryScheduler\SalaryScheduler\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
