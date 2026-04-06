@@ -42,11 +42,12 @@ if (!string.IsNullOrEmpty(hangfireConnection))
         Cron.Minutely
     );
 
-    // Monthly Salary Processing Job
-    RecurringJob.AddOrUpdate<SalaryScheduler.BackgroundJobs.Jobs.SalaryJob>(
-        "monthly-salary-job",
-        job => job.Execute(),
-        "0 0 22 L * ?"  // Last day of month at 22:00
+
+    // Email Notification Batch Job - Runs every 2 minutes
+    RecurringJob.AddOrUpdate<UtilityJobs>(
+        "email-notification-batch-job",
+        job => job.SendSalaryNotification(1),
+        "*/2 * * * *"  // Every 2 minutes
     );
 }
 

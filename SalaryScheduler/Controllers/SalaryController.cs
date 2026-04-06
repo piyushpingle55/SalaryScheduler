@@ -16,7 +16,50 @@ namespace SalaryScheduler.Controllers
             return Ok("Salary job triggered manually.");
         }
 
-        //1) Fire-and-Forget Job: Send notification immediately after salary is processed
+        // Trigger the email notification batch job manually
+        [HttpPost("trigger-notification")]
+        public IActionResult TriggerNotificationJob()
+        {
+            RecurringJob.Trigger("email-notification-batch-job");
+            return Ok(new 
+            { 
+                message = "Email notification batch job triggered manually",
+                status = "The email will be sent to pinglepiyush55555@gmail.com",
+                timestamp = DateTime.UtcNow
+            });
+        }
+
+        // Pause the email notification batch job
+        [HttpPost("pause-notification")]
+        public IActionResult PauseNotificationJob()
+        {
+            RecurringJob.RemoveIfExists("email-notification-batch-job");
+            return Ok(new 
+            { 
+                message = "Email notification batch job paused",
+                status = "The job will not run automatically every 2 minutes",
+                timestamp = DateTime.UtcNow
+            });
+        }
+
+        // Resume the email notification batch job
+        [HttpPost("resume-notification")]
+        public IActionResult ResumeNotificationJob()
+        {
+            RecurringJob.AddOrUpdate<UtilityJobs>(
+                "email-notification-batch-job",
+                job => job.SendSalaryNotification(1),
+                "*/2 * * * *"  // Every 2 minutes
+            );
+            return Ok(new 
+            { 
+                message = "Email notification batch job resumed",
+                status = "The job will run automatically every 2 minutes",
+                timestamp = DateTime.UtcNow
+            });
+        }
+
+        //1) Fire-and-Forget Job: Send notification immediately after salary is processed (Manual trigger)
         [HttpPost("notify")]
         public IActionResult SendNotification()
         {
@@ -56,7 +99,9 @@ namespace SalaryScheduler.Controllers
 
         //3) Recurring Job (Already Using) : Monthly salary processing
 
-        //4) Continuation Job : Process salary → then notify employees
+        //4) Recurring Job : Email notification batch job (runs every 2 minutes)
+
+        //5) Continuation Job : Process salary → then notify employees
         [HttpPost("process-with-notification")]
         public IActionResult ProcessWithNotification()
         {
