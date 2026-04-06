@@ -14,6 +14,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<SalaryService>();
 builder.Services.AddScoped<SalaryScheduler.BackgroundJobs.Jobs.SalaryJob>();
 builder.Services.AddScoped<UtilityJobs>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 // Hangfire Configuration (requires valid SQL Server)
 var hangfireConnection = builder.Configuration.GetConnectionString("DefaultConnection");

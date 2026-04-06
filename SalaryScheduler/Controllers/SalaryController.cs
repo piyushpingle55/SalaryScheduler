@@ -20,10 +20,27 @@ namespace SalaryScheduler.Controllers
         [HttpPost("notify")]
         public IActionResult SendNotification()
         {
-            BackgroundJob.Enqueue<UtilityJobs>(
-                job => job.SendSalaryNotification(1));
+            try
+            {
+                var jobId = BackgroundJob.Enqueue<UtilityJobs>(
+                    job => job.SendSalaryNotification(1));
 
-            return Ok("Notification job triggered");
+                return Ok(new 
+                { 
+                    message = "Notification job triggered successfully",
+                    jobId = jobId,
+                    status = "The email will be sent to pinglepiyush55555@gmail.com",
+                    timestamp = DateTime.UtcNow
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new 
+                { 
+                    message = "Error triggering notification job",
+                    error = ex.Message
+                });
+            }
         }
 
         //2) Delayed Job :Retry failed payment after 10 minutes
