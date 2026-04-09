@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using SalaryScheduler.Domain.Entities;
-using SalaryScheduler.Domain.Entities.Infrastructure.Data;
+
+using SalaryScheduler.Models;
 
 namespace SalaryScheduler.Application.Services
 {

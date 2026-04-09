@@ -2,6 +2,7 @@ using System.Net;
 using System.Net.Mail;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using SalaryScheduler.Repository;
 
 namespace SalaryScheduler.Application.Services
 {
@@ -13,45 +14,38 @@ namespace SalaryScheduler.Application.Services
 
     public class EmailService : IEmailService
     {
-        private readonly IConfiguration _configuration;
         private readonly ILogger<EmailService> _logger;
-        private readonly string _smtpServer;
-        private readonly int _smtpPort;
-        private readonly string _senderEmail;
-        private readonly string _senderPassword;
-        private readonly bool _enableSSL;
+        private readonly IEmailSettingsRepository _emailSettingsRepository;
 
-        public EmailService(IConfiguration configuration, ILogger<EmailService> logger)
+        public EmailService(ILogger<EmailService> logger,IEmailSettingsRepository emailSettingsRepository)
         {
-            _configuration = configuration;
             _logger = logger;
-
-            _smtpServer = _configuration["EmailSettings:SmtpServer"] ?? "smtp.gmail.com";
-            _smtpPort = int.Parse(_configuration["EmailSettings:SmtpPort"] ?? "587");
-            _senderEmail = _configuration["EmailSettings:SenderEmail"] ?? "";
-            _senderPassword = _configuration["EmailSettings:SenderPassword"] ?? "";
-            _enableSSL = bool.Parse(_configuration["EmailSettings:EnableSSL"] ?? "true");
+            _emailSettingsRepository = emailSettingsRepository;
         }
 
         public async Task SendEmailAsync(string toEmail, string subject, string body, bool isHtml = true)
         {
+            // call to db Email Settings Table.
+            var senderEmailDetail = await _emailSettingsRepository.GetActiveSettingsAsync();
+            var SmtpPort  = senderEmailDetail.SmtpPort ?? 587;
+            var EnableSsl = senderEmailDetail.EnableSsl ?? true;
             try
             {
-                if (string.IsNullOrEmpty(_senderEmail) || string.IsNullOrEmpty(_senderPassword))
+                if (string.IsNullOrEmpty(senderEmailDetail.SenderEmail) || string.IsNullOrEmpty(senderEmailDetail.SenderPassword))
                 {
                     _logger.LogWarning("Email service not configured. Skipping email to {ToEmail}", toEmail);
                     return;
                 }
 
-                using (SmtpClient smtpClient = new SmtpClient(_smtpServer, _smtpPort))
+                using (SmtpClient smtpClient = new SmtpClient(senderEmailDetail.SmtpServer, SmtpPort))
                 {
-                    smtpClient.EnableSsl = _enableSSL;
+                    smtpClient.EnableSsl = EnableSsl;
                     smtpClient.UseDefaultCredentials = false;
-                    smtpClient.Credentials = new NetworkCredential(_senderEmail, _senderPassword);
+                    smtpClient.Credentials = new NetworkCredential(senderEmailDetail.SenderEmail, senderEmailDetail.SenderPassword);
 
                     using (MailMessage mailMessage = new MailMessage())
                     {
-                        mailMessage.From = new MailAddress(_senderEmail, "Salary Scheduler");
+                        mailMessage.From = new MailAddress(senderEmailDetail.SenderEmail, "Salary Scheduler");
                         mailMessage.To.Add(toEmail);
                         mailMessage.Subject = subject;
                         mailMessage.Body = body;

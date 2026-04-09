@@ -1,8 +1,9 @@
 using Hangfire;
 using Microsoft.EntityFrameworkCore;
 using SalaryScheduler.Application.Services;
-using SalaryScheduler.Domain.Entities.Infrastructure.Data;
 using SalaryScheduler.Hangfire.Jobs;
+using SalaryScheduler.Models;
+using SalaryScheduler.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<SalaryService>();
 builder.Services.AddScoped<SalaryScheduler.BackgroundJobs.Jobs.SalaryJob>();
 builder.Services.AddScoped<UtilityJobs>();
+builder.Services.AddScoped<IEmailSettingsRepository,EmailSettingsRepository>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 
 // Hangfire Configuration (requires valid SQL Server)
@@ -53,6 +55,7 @@ if (!string.IsNullOrEmpty(hangfireConnection))
 
 // Root URL endpoint
 app.MapGet("/", () => "Salary Scheduler is running...");
+
 
 // Controllers
 app.MapControllers();
