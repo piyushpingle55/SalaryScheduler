@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SalaryScheduler")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dce86364a7712933f1e9ff0d7503af406d38b30b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bfd566ccec41f84280eb8d33b123bb9dcbe6d10c")]
 [assembly: System.Reflection.AssemblyProductAttribute("SalaryScheduler")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SalaryScheduler")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

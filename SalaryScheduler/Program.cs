@@ -37,13 +37,8 @@ if (!string.IsNullOrEmpty(hangfireConnection))
 {
     app.UseHangfireDashboard();
     
-    // Optional Test Job
-    RecurringJob.AddOrUpdate(
-        "test-job",
-        () => Console.WriteLine("Hangfire is working!"),
-        Cron.Minutely
-    );
-
+   //Remove Old Jobs.
+    RecurringJob.RemoveIfExists("email-notification-batch-job"); 
 
     // Email Notification Batch Job - Runs every 2 minutes
     RecurringJob.AddOrUpdate<UtilityJobs>(
