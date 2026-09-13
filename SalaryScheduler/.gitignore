@@ -1,0 +1,16 @@
+## Visual Studio temporary files & caches (Matches anywhere in the project)
+**/.vs/
+**/.idea/
+*.user
+*.userossc
+*.sln.docstates
+*.suo
+
+## Build outputs
+**/[Bb]in/
+**/[Ob]j/
+**/[L3]og/
+**/logs/
+
+## IIS Express local configs
+**/.vs/config/applicationhost.config
