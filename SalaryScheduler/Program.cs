@@ -1,11 +1,27 @@
 using Hangfire;
 using Microsoft.EntityFrameworkCore;
+using Prometheus;
 using SalaryScheduler.Application.Services;
 using SalaryScheduler.Hangfire.Jobs;
 using SalaryScheduler.Models;
 using SalaryScheduler.Repository;
+using Serilog;
+using Serilog.Sinks.Grafana.Loki;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// 1. Configure Serilog with Loki Sink
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .Enrich.FromLogContext()
+    .Enrich.WithProperty("app", "SalaryScheduler")
+    .WriteTo.Console()
+    .WriteTo.GrafanaLoki("http://localhost:3100") // Loki service endpoint
+    .CreateLogger();
+
+builder.Host.UseSerilog();
+
+
 
 // DB
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -29,8 +45,14 @@ if (!string.IsNullOrEmpty(hangfireConnection))
 }
 
 builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
+app.UseRouting();
+
+// 2. Enable Prometheus HTTP Metrics tracking middleware
+app.UseHttpMetrics();
+app.UseAuthorization();
 
 // Hangfire Dashboard (only if configured)
 if (!string.IsNullOrEmpty(hangfireConnection))
@@ -51,7 +73,7 @@ if (!string.IsNullOrEmpty(hangfireConnection))
 // Root URL endpoint
 app.MapGet("/", () => "Salary Scheduler is running...");
 
-
+app.MapMetrics();
 // Controllers
 app.MapControllers();
 
