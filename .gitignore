@@ -1,18 +1,20 @@
 ## Visual Studio IDE & Cache Files
 .vs/
 **/.vs/
-*.suo
-*.user
-*.userossc
-*.sln.docstates
+
 
 ## Build Outputs & Binaries
-[Bb]in/
-[Ob]j/
-**/[Bb]in/
-**/[Ob]j/
+bin/
+/bin/
+obj/
+/obj/
+[Bb][Ii][Nn]/
+/[Bb][Ii][Nn]/
+[Oo][Bb][Jj]/
+/[Oo][Bb][Jj]/
 
-## Logs
-[Ll]og/
-[Ll]ogs/
-**/[Ll]ogs/
+## User-specific files
+*.user
+**/*.user
+*.userossc
+*.sln.docstates
